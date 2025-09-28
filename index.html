@@ -2,103 +2,90 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Arduino Web Editor</title>
+  <title>Editor Arduino Web</title>
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #222;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-    .project-list {
-      padding: 20px;
-    }
-    .project-list ul {
-      list-style: none;
-      padding: 0;
-    }
-    .project-list li {
-      margin: 5px 0;
-    }
-    .editor-container {
-      display: none;
-      padding: 20px;
-    }
-    iframe {
-      width: 100%;
-      height: 500px;
-      border: 1px solid #ccc;
-    }
-    .buttons {
-      margin-top: 10px;
-    }
-    button {
-      margin-right: 10px;
-      padding: 10px 15px;
-    }
+    body { font-family: sans-serif; margin: 0; padding: 0; }
+    header { background: #222; color: white; padding: 10px; text-align: center; }
+    .project-list, .editor-container { padding: 20px; }
+    button { margin: 5px; padding: 10px 15px; }
+    iframe { width: 100%; height: 500px; border: 1px solid #ccc; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>Mi Editor Arduino</h1>
-    <img src="https://tse1.mm.bing.net/th/id/OIP.JvKnCa6ZtnzDfyXYjmkNVgHaDm?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo" height="50">
     <button onclick="signIn()">Iniciar sesión con Google</button>
   </header>
 
   <div class="project-list">
     <h2>Proyectos creados</h2>
-    <ul>
-      <li><button onclick="openEditor('Proyecto 1')">Proyecto 1</button></li>
-      <li><button onclick="openEditor('Proyecto 2')">Proyecto 2</button></li>
-      <li><button onclick="openEditor('Proyecto 3')">Proyecto 3</button></li>
-    </ul>
-    <button onclick="createProject()">Crear nuevo proyecto</button>
+    <ul id="lista-proyectos"></ul>
+    <input type="text" id="nuevo-nombre" placeholder="Nombre del proyecto">
+    <button onclick="crearProyecto()">Crear proyecto</button>
   </div>
 
-  <div class="editor-container" id="editor">
-    <h2 id="project-title">Editor</h2>
-    <iframe src="https://create.arduino.cc/editor" title="Arduino Editor"></iframe>
-    <div class="buttons">
-      <button onclick="publish()">Publicar</button>
-      <button onclick="save()">Guardar</button>
+  <div class="editor-container" id="editor" style="display:none;">
+    <h2 id="titulo-editor">Editor</h2>
+    <iframe src="https://create.arduino.cc/editor"></iframe>
+    <div>
+      <button onclick="publicar()">Publicar</button>
+      <button onclick="guardar()">Guardar</button>
     </div>
   </div>
 
   <script>
+    let proyectos = JSON.parse(localStorage.getItem("proyectos")) || [];
+    let proyectoActual = null;
     let loggedIn = false;
 
+    function actualizarLista() {
+      const lista = document.getElementById("lista-proyectos");
+      lista.innerHTML = "";
+      proyectos.forEach((nombre, i) => {
+        const item = document.createElement("li");
+        const boton = document.createElement("button");
+        boton.textContent = nombre;
+        boton.onclick = () => abrirEditor(nombre);
+        item.appendChild(boton);
+        lista.appendChild(item);
+      });
+    }
+
+    function crearProyecto() {
+      const nombre = document.getElementById("nuevo-nombre").value.trim();
+      if (nombre && !proyectos.includes(nombre)) {
+        proyectos.push(nombre);
+        localStorage.setItem("proyectos", JSON.stringify(proyectos));
+        actualizarLista();
+        document.getElementById("nuevo-nombre").value = "";
+      }
+    }
+
+    function abrirEditor(nombre) {
+      proyectoActual = nombre;
+      document.getElementById("editor").style.display = "block";
+      document.getElementById("titulo-editor").textContent = "Editando: " + nombre;
+    }
+
     function signIn() {
-      // Simulación de inicio de sesión con Google
-      alert("Inicio de sesión con Google simulado");
+      alert("Inicio de sesión simulado");
       loggedIn = true;
     }
 
-    function openEditor(nombre) {
-      document.getElementById("editor").style.display = "block";
-      document.getElementById("project-title").innerText = "Editando: " + nombre;
-    }
-
-    function createProject() {
-      openEditor("Nuevo Proyecto");
-    }
-
-    function publish() {
-      alert("Proyecto publicado");
-    }
-
-    function save() {
+    function guardar() {
       if (!loggedIn) {
         alert("Debes iniciar sesión con Google para guardar");
       } else {
-        alert("Proyecto guardado");
+        alert("Proyecto '" + proyectoActual + "' guardado");
       }
     }
+
+    function publicar() {
+      alert("Proyecto publicado: " + proyectoActual);
+    }
+
+    actualizarLista();
   </script>
 
 </body>
