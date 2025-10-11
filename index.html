@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Descargas SB3 - Angel</title>
+  <title>Versiones ZIP - Angel</title>
   <style>
     body {
       font-family: monospace;
@@ -30,13 +30,13 @@
   </style>
 </head>
 <body>
-  <h1>🧠 Descargas SB3 - Angel</h1>
+  <h1>📦 Versiones ZIP - Angel</h1>
   <ul id="versionList">
     <li>Cargando versiones...</li>
   </ul>
 
   <script>
-    // 🔒 Repositorio embebido en el código
+    // 🔒 Repositorio embebido
     const repoOwner = "TU_USUARIO"; // ← reemplaza con tu usuario
     const repoName = "TU_REPO";     // ← reemplaza con tu repo
 
@@ -47,20 +47,20 @@
         list.innerHTML = "";
 
         files
-          .filter(file => file.name.endsWith(".sb3"))
+          .filter(file => file.name.endsWith(".zip"))
           .sort()
           .forEach(file => {
             const li = document.createElement("li");
             const a = document.createElement("a");
             a.href = file.download_url;
-            a.textContent = `Versión ${file.name.replace(".sb3", "")}`;
+            a.textContent = `Versión ${file.name.replace(".zip", "")}`;
             a.download = file.name;
             li.appendChild(a);
             list.appendChild(li);
           });
 
         if (list.children.length === 0) {
-          list.innerHTML = "<li>No se encontraron archivos .sb3</li>";
+          list.innerHTML = "<li>No se encontraron archivos .zip</li>";
         }
       })
       .catch(err => {
