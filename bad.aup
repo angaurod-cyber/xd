@@ -1,0 +1,10 @@
+
+
+eeprom.write(0x00, "BLW LITE vX");               // Versión inválida (no empieza con "BLW Lite")
+eeprom.write(0x10, "explode");                  // Animación inexistente
+eeprom.write(0x30, [999, -1, "azul"]);          // Colores malformados (fuera de rango y tipo incorrecto)
+eeprom.write(0x33, [255]);                      // Color incompleto
+eeprom.write(0x36, "circle");                   // Menú no soportado
+eeprom.write(0x46, "ultra");                    // Sensibilidad no reconocida
+eeprom.write(0x70, "");                         // Intro vacía
+eeprom.write(0xD0, "debug=maybe;safe_mode=banana"); // Flags inválidos
