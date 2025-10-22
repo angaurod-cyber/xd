@@ -1,0 +1,15 @@
+//solo si te falla la consola
+
+eeprom.write(0x00, "USW Lite v01 alpha");         // Versión base
+eeprom.write(0x10, "dots");                      // Animación segura
+eeprom.write(0x30, [0, 0, 0]);                   // Fondo negro
+eeprom.write(0x33, [0, 255, 255]);               // Texto cian
+eeprom.write(0x36, "list");                      // Menú básico
+eeprom.write(0x46, "medium");                    // Joystick medio
+eeprom.write(0x70, "Bienvenido a BLW Lite v01"); // Intro original
+eeprom.write(0xD0, "debug=off;store=hidden;safe_mode=on"); // Flags seguros
+
+// Limpieza de espacio de juegos
+for (let i = 0x100; i < 0x3FF; i++) {
+  eeprom.write(i, 0xFF);
+}
