@@ -1,0 +1,15 @@
+// v04.aup — Actualización visual y funcional
+
+eeprom.write(0x00, "BLW Lite v01 alpha");         // Versión del sistema
+eeprom.write(0x10, "wave");                      // Animación de carga tipo onda
+eeprom.write(0x30, [32, 0, 64]);                 // Fondo púrpura oscuro
+eeprom.write(0x33, [255, 215, 0]);               // Texto dorado
+eeprom.write(0x36, "grid");                      // Menú en cuadrícula
+eeprom.write(0x46, "high");                      // Joystick sensible
+eeprom.write(0x70, "BLW v04: Sistema modular activo"); // Intro personalizada
+eeprom.write(0xD0, "debug=on;store=visible;safe_mode=off"); // Flags del sistema
+
+// Limpieza de espacio de juegos (opcional)
+for (let i = 0x100; i < 0x3FF; i++) {
+  eeprom.write(i, 0xFF); // Borra con valor neutro
+}
