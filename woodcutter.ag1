@@ -1,0 +1,7 @@
+GAME=Talar Madera
+tft.fillScreen(GREEN)
+tft.setCursor(40,20)
+tft.setTextColor(WHITE)
+tft.setTextSize(2)
+tft.print("Juego: Talar Madera")
+fillRect(100,60,40,120,RED)
