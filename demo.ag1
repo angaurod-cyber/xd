@@ -1,0 +1,23 @@
+GAME=DemoInteractivo
+REQUIRES=tft, joystick, buzzer
+
+tft.fillScreen(BLUE)
+tft.setCursor(40, 40)
+tft.setTextColor(YELLOW)
+tft.setTextSize(2)
+tft.print("Bienvenido al demo")
+
+drawCube(60, 100, 40, RED)
+drawCircle(160, 120, 20, GREEN)
+drawTriangle(240, 140, 30, CYAN)
+
+ifJoystickUp {
+  tft.fillScreen(BLACK)
+  tft.setCursor(40, 80)
+  tft.setTextColor(WHITE)
+  tft.setTextSize(2)
+  tft.print("Joystick arriba!")
+  tone(23, 1000)
+  delay(500)
+  noTone(23)
+}
